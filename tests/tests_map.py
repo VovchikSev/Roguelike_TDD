@@ -7,7 +7,7 @@ from random import choice, randint
 from Roguelike_TDD.src.map import Map
 from Roguelike_TDD.src.options import *
 
-
+# проблема с импортом https://tproger.ru/translations/guide-into-python-imports/
 class MapTestCase(unittest.TestCase):
     def test_make_map(self):
         map = Map()
