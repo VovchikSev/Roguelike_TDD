@@ -19,4 +19,7 @@ class Map:
         return self.map[y][x]
     
     def put(self, x, y, char):
+        self.map[y][x] = char
+
+    def place(self, quantity, char):
         pass
