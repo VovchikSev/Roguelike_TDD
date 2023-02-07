@@ -23,6 +23,7 @@ class GameTetCase(unittest.TestCase):
         game.map = MockMap
         game.generate_map(20, 10, EMPTY)
         game.map.generate.assert_called_with(20, 10,  EMPTY)
+        game.map.place()
 
     @patch("src.map.Map")
     def tests_place_items_on_map(self, MockMap):
