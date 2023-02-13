@@ -38,3 +38,10 @@ f - атаковать соседнего монстра.
 
 Не знаешь с чего начать, начинай с теста!
 """
+from src.options import *
+from src.game import Game
+
+game = Game()
+
+
+game.run()
