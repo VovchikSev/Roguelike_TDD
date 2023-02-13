@@ -2,7 +2,7 @@ import unittest
 from random import randint
 from unittest.mock import patch
 
-from src.brain import Brain
+from src.brain import *
 from src.options import *
 from src.user import User
 
@@ -76,34 +76,24 @@ class UserTestCase(unittest.TestCase):
         self.assertEqual(user.position, [x, y])
         MockMap.put.assert_called_with(x, y, USER)
     
-    # @unittest.skip('Реализуем мозги')
-    def test_user_can_do_action(self):
+    def test_can_walk_to(self):
         user = User("TestUser_Name")
-        self.assertEqual(user.can_do_action(EMPTY), {'message': MESSAGE_EMPTY, 'action': [DIRECTION_UP,
-                                                                                          DIRECTION_DOWN,
-                                                                                          DIRECTION_LEFT,
-                                                                                          DIRECTION_RIGHT]})
-        self.assertEqual(user.can_do_action(TREE), {'message': MESSAGE_TREE, 'action': [DIRECTION_UP,
-                                                                                        DIRECTION_DOWN,
-                                                                                        DIRECTION_LEFT,
-                                                                                        DIRECTION_RIGHT,
-                                                                                        HACK]})
-        self.assertEqual(user.can_do_action(STONE), {'message': MESSAGE_STONE, 'action': [DIRECTION_UP,
-                                                                                          DIRECTION_DOWN,
-                                                                                          DIRECTION_LEFT,
-                                                                                          DIRECTION_RIGHT]})
-        self.assertEqual(user.can_do_action(LETTER), {'message': MESSAGE_LETTER, 'action': [DIRECTION_UP,
-                                                                                            DIRECTION_DOWN,
-                                                                                            DIRECTION_LEFT,
-                                                                                            DIRECTION_RIGHT, READ]})
-        self.assertEqual(user.can_do_action(TREASURE), {'message': MESSAGE_TREASURE, 'action': [DIRECTION_UP,
-                                                                                                DIRECTION_DOWN,
-                                                                                                DIRECTION_LEFT,
-                                                                                                DIRECTION_RIGHT,
-                                                                                                PICK_UP]})
-    
-    def test_user_action(self):
+        knowledge_about = Empty()
+        self.assertEqual(user.can_walk_to(DIRECTION_UP, knowledge_about),
+                         [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT])
+        
+        knowledge_about = Stone()
+        self.assertEqual(user.can_walk_to(DIRECTION_UP, knowledge_about),
+                         [DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT])
+
+        
+    # @unittest.skip('Рефакторинг')
+    def test_user_do(self):
         user = User("TestUser_Name")
+        knowledge_about = Treasure()
+        user.action =  # knowledge_about.can_do()[0]
+        user.do(map, knowledge_about)
+        
         self.assertTrue(False)
 
 

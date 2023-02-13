@@ -1,3 +1,5 @@
+from abc import ABC, abstractclassmethod
+
 from src.options import *
 
 
@@ -15,41 +17,77 @@ class Brain:
         return Empty()
 
 
-class Empty:
-    def mesage(self):
+class KnowledgeAbout(ABC):
+    @abstractclassmethod
+    def message(self):
+        pass
+    
+    @abstractclassmethod
+    def can_do(self):
+        return [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT]
+    
+    @abstractclassmethod
+    def do(self, user, map, action):
+        pass
+    
+    # @abstractclassmethod
+    def it_barier(self):
+        return True
+
+
+class Empty(KnowledgeAbout):
+    def do(self, user, map, action):
+        pass
+    
+    def message(self):
         return MESSAGE_EMPTY
     
-    def actions(self):
-        return [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT]
+    def can_do(self):
+        return []
+    
+    def it_barier(self):
+        return False
 
 
-class Tree:
-    def mesage(self):
+class Tree(KnowledgeAbout):
+    def do(self, user, map, action):
+        pass
+    
+    def message(self):
         return MESSAGE_TREE
     
-    def actions(self):
-        return [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, HACK]
+    def can_do(self):
+        return [HACK]
 
 
-class Stone:
-    def mesage(self):
+class Stone(KnowledgeAbout):
+    def do(self, user, map, action):
+        pass
+    
+    def message(self):
         return MESSAGE_STONE
     
-    def actions(self):
-        return [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT]
+    def can_do(self):
+        return []
 
 
-class Letter:
-    def mesage(self):
+class Letter(KnowledgeAbout):
+    def do(self, user, map, action):
+        pass
+    
+    def message(self):
         return MESSAGE_LETTER
     
-    def actions(self):
-        return [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, READ]
+    def can_do(self):
+        return [READ]
 
 
-class Treasure:
-    def mesage(self):
+class Treasure(KnowledgeAbout):
+    def do(self, user, map, action):
+        pass
+    
+    def message(self):
         return MESSAGE_TREASURE
     
-    def actions(self):
-        return [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, PICK_UP]
+    def can_do(self):
+        return [PICK_UP]

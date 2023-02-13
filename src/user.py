@@ -35,13 +35,18 @@ class User:
     
     def show_info(self, map: Map):
         print(f"В вашем инвентаре {self.inventory.count(TREASURE)} сокровищ")
-        can_do = self.can_do_action(self.see(map))
-        print(can_do['message'])
-        self.action = input(f"{can_do['action']}: ")
+        knowledge_about = self.brain.recognize(self.see(map))
+        # can_do = self.can_do_action(self.see(map))
+        print(knowledge_about.message())
+        direction = ','.join(self.can_walk_to(self.direction, knowledge_about))
+        self.action = input(
+            f"Идти в направлении [{direction}] или [{'.'.join(knowledge_about.can_do())}]: ")
+
+    def can_walk_to(self, direction, knowledge_about):
+        directions =  [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT]
+        if knowledge_about.it_barier():
+            directions.remove(direction)
+        
+        return directions
     
-    def can_do_action(self, char):
-        recorganized_object = self.brain.recognize(char)
-        return {
-            'message': recorganized_object.mesage(),
-            'action': recorganized_object.actions()
-        }
+

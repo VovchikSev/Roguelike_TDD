@@ -19,29 +19,39 @@ class BrainTetCase(unittest.TestCase):
         self.assertIsInstance(brain.recognize(TREASURE), Treasure)
     
     def test_empty_object(self):
-        empty = Empty()
-        self.assertEqual(empty.mesage(), MESSAGE_EMPTY)
-        self.assertEqual(empty.actions(), [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT])
+        object = Empty()
+        self.assertIsInstance(object, KnowledgeAbout)
+        self.assertEqual(object.message(), MESSAGE_EMPTY)
+        self.assertEqual(object.can_do(), [])
+        self.assertFalse(object.it_barier())
     
     def test_tree_object(self):
-        tree = Tree()
-        self.assertEqual(tree.mesage(), MESSAGE_TREE)
-        self.assertEqual(tree.actions(), [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, HACK])
-    
+        object = Tree()
+        self.assertIsInstance(object, KnowledgeAbout)
+        self.assertEqual(object.message(), MESSAGE_TREE)
+        self.assertEqual(object.can_do(), [HACK])
+        self.assertTrue(object.it_barier())
     def test_stone_object(self):
-        stone = Stone()
-        self.assertEqual(stone.mesage(), MESSAGE_STONE)
-        self.assertEqual(stone.actions(), [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT])
+        object = Stone()
+        self.assertIsInstance(object, KnowledgeAbout)
+        self.assertIsInstance(object, KnowledgeAbout)
+        self.assertEqual(object.message(), MESSAGE_STONE)
+        self.assertEqual(object.can_do(), [])
+        self.assertTrue(object.it_barier())
     
     def test_letter_object(self):
-        letter = Letter()
-        self.assertEqual(letter.mesage(), MESSAGE_LETTER)
-        self.assertEqual(letter.actions(), [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, READ])
+        object = Letter()
+        self.assertIsInstance(object, KnowledgeAbout)
+        self.assertEqual(object.message(), MESSAGE_LETTER)
+        self.assertEqual(object.can_do(), [READ])
+        self.assertTrue(object.it_barier())
     
     def test_treasure_object(self):
-        treasure = Treasure()
-        self.assertEqual(treasure.mesage(), MESSAGE_TREASURE)
-        self.assertEqual(treasure.actions(), [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT, PICK_UP])
+        object = Treasure()
+        self.assertIsInstance(object, KnowledgeAbout)
+        self.assertEqual(object.message(), MESSAGE_TREASURE)
+        self.assertEqual(object.can_do(), [PICK_UP])
+        self.assertTrue(object.it_barier())
 
 
 if __name__ == "__main__":
