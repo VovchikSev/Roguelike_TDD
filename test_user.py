@@ -2,6 +2,7 @@ import unittest
 from random import randint
 from unittest.mock import patch
 
+import src.user
 from src.brain import *
 from src.options import *
 from src.user import User
@@ -85,16 +86,17 @@ class UserTestCase(unittest.TestCase):
         knowledge_about = Stone()
         self.assertEqual(user.can_walk_to(DIRECTION_UP, knowledge_about),
                          [DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT])
-
-        
+    
     # @unittest.skip('Рефакторинг')
-    def test_user_do(self):
-        user = User("TestUser_Name")
+    @patch("src.user.User")
+    def test_user_do(self, user):
+        # user = User("TestUser_Name")
         knowledge_about = Treasure()
-        user.action =  # knowledge_about.can_do()[0]
+        user.action = DIRECTION_UP  # knowledge_about.can_do()[0]
+        user.can_walk_to.return_value = [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_RIGHT]
         user.do(map, knowledge_about)
-        
-        self.assertTrue(False)
+        self.assertIn(user.action, user.can_walk_to(user.action, knowledge_about))
+        user.move.assert_called_once()
 
 
 if __name__ == "__main__":

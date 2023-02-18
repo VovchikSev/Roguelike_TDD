@@ -4,6 +4,7 @@ from src.map import Map
 
 
 class User:
+    
     def __init__(self, name):
         self.action = ''
         self.brain = Brain()
@@ -42,11 +43,18 @@ class User:
         self.action = input(
             f"Идти в направлении [{direction}] или [{'.'.join(knowledge_about.can_do())}]: ")
 
-    def can_walk_to(self, direction, knowledge_about):
-        directions =  [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT]
+    @staticmethod
+    def can_walk_to(direction, knowledge_about):
+        directions = [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT]
         if knowledge_about.it_barier():
             directions.remove(direction)
         
         return directions
+
+    def do(self, map, knowledge_about):
+        pass
+    
+    def move(self):
+        pass
     
 
