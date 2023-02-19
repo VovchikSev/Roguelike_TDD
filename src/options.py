@@ -27,6 +27,14 @@ HACK = 'x'
 PICK_UP = 'i'
 READ = 'r'
 
+objects = {
+    EMPTY: 'Empty',
+    TREE: 'Tree',
+    STONE: 'Stone',
+    LETTER: 'Letter',
+    TREASURE: 'Treasure'
+}
+
 MESSAGE_EMPTY = 'Впереди пусто.'
 MESSAGE_STONE = 'Вы уперлись лбом в камень.'
 MESSAGE_TREE = 'Вы уперлись лбом в дерево.'

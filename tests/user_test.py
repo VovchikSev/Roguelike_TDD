@@ -2,10 +2,9 @@ import unittest
 from random import randint
 from unittest.mock import patch
 
-import src.user
 from src.brain import *
 from src.options import *
-from src.user import User
+from src.user import *
 
 
 class UserTestCase(unittest.TestCase):
@@ -26,7 +25,7 @@ class UserTestCase(unittest.TestCase):
         user = User("UserName")
         self.assertEqual(user.health, MAX_USER_HEALTH)
     
-    def test_user_has_barain(self):
+    def test_user_has_brain(self):
         user = User("TestUser_Name")
         self.assertIsInstance(user.brain, Brain)
     
@@ -61,13 +60,6 @@ class UserTestCase(unittest.TestCase):
         self.assertTrue(user.is_dead())
     
     @patch("src.map.Map")
-    def test_user_see(self, MockMap):
-        user = User("TestUser_Name")
-        attrs = {"get_in_direction.return_value": TREE}
-        MockMap.configure_mock(**attrs)
-        self.assertEqual(user.see(MockMap), TREE)
-    
-    @patch("src.map.Map")
     def test_place_on_map(self, MockMap):
         x, y = randint(0, 10), randint(0, 20)
         user = User("TestUser_Name")
@@ -79,24 +71,31 @@ class UserTestCase(unittest.TestCase):
     
     def test_can_walk_to(self):
         user = User("TestUser_Name")
-        knowledge_about = Empty()
+        knowledge_about = Empty([0, 0])
         self.assertEqual(user.can_walk_to(DIRECTION_UP, knowledge_about),
                          [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT])
         
-        knowledge_about = Stone()
+        knowledge_about = Stone([0, 0])
         self.assertEqual(user.can_walk_to(DIRECTION_UP, knowledge_about),
                          [DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT])
+        
+        knowledge_about = Treasure([0, 0])
+        self.assertEqual(user.can_walk_to(DIRECTION_LEFT, knowledge_about),
+                         [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_RIGHT])
     
-    # @unittest.skip('Рефакторинг')
-    @patch("src.user.User")
-    def test_user_do(self, user):
-        # user = User("TestUser_Name")
-        knowledge_about = Treasure()
-        user.action = DIRECTION_UP  # knowledge_about.can_do()[0]
-        user.can_walk_to.return_value = [DIRECTION_UP, DIRECTION_DOWN, DIRECTION_RIGHT]
-        user.do(map, knowledge_about)
-        self.assertIn(user.action, user.can_walk_to(user.action, knowledge_about))
-        user.move.assert_called_once()
+    @patch("src.brain.Treasure")
+    def test_user_do(self, MockTreasure):
+        user = User("TestUser_Name")
+        map = Map()
+        user.action = PICK_UP
+        MockTreasure.can_do.return_value = [PICK_UP]
+        user.do(map, MockTreasure)
+        MockTreasure.do.assert_called_with(user, user.action, map)
+
+    @patch("src.map.Map")
+    def test_user_move(self, MockMap):
+        user = User("TestUser_Name")
+        self.assertFalse(True)
 
 
 if __name__ == "__main__":

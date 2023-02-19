@@ -44,7 +44,7 @@ class GameTetCase(unittest.TestCase):
         game.user.configure_mock(**attrs)
         game.turn()
         game.map.show.assert_called_once()
-        game.user.show_info.assert_called_with(game.map)
+        game.user.turn.assert_called_with(game.map)
     
     @patch("src.map.Map")
     @patch("src.user.User")

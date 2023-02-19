@@ -1,4 +1,7 @@
 """
+Основной файл, использовать длчя запуска...
+"""
+"""
 По мотивам https://www.youtube.com/watch?v=ccf1t5EEC_M (первое видео)
 Проект приостановлен на видео № 6 https://www.youtube.com/watch?v=f-b2rgNIUz8 30я минута.
 Перенос всех проектов в одну общую среду в одну папку.
@@ -41,10 +44,9 @@ f - атаковать соседнего монстра.
 
 Не знаешь с чего начать, начинай с теста!
 """
-from src.options import *
+
 from src.game import Game
 
-game = Game()
-
-
-game.run()
+if __name__ == '__main__':
+    game = Game()
+    game.run()
