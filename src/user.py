@@ -59,4 +59,5 @@ class User:
             knowledge_about.do(self, self.action, map)
     
     def move(self, action, map):
-        pass
+        self.direction = action
+        knowledge_about = self.brain.knowledge(map, self.position, self.direction)
